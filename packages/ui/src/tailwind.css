@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.car-card {
+  @apply bg-white relative text-primary rounded shadow-md overflow-hidden flex flex-col;
+}
+
+.basic-badge {
+  @apply absolute border border-solid m-3 px-3 right-0 rounded-full text-sm top-0;
+}
+
+.pretify-img {
+  @apply w-full h-full object-cover;
+}

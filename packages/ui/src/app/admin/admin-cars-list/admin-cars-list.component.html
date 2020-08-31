@@ -1,0 +1,68 @@
+<div class="pb-6">
+  <div class="car-card hover:shadow-lg transition ease-in-out duration-300 mt-6 py-3 px-6"
+    *ngFor="let car of (cars$ | async)">
+
+    <span class="text-xs" [ngClass]="car.isBooked ? 'text-gray-500' : 'text-teal-500'"
+      [textContent]="car.isBooked ? 'This car is booked now' : 'This car is free now!'"></span>
+
+    <div class="md:flex justify-between items-start relative w-full">
+      <h3 class="font-bold text-header flex-auto">{{car.title}}</h3>
+
+      <div class="flex md:mt-0 mt-4">
+        <button
+          class="flex md:ml-3 bg-transparent border border-blue-500 font-semibold hover:bg-blue-500 hover:border-transparent hover:text-white px-2 py-1 rounded text-blue-700"
+          type="button" (click)="edit(car)">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="pencil w-6 h-6 sm:block hidden">
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+            </path>
+          </svg>
+          Edit</button>
+
+        <button
+          class="flex ml-3 bg-transparent border border-blue-500 font-semibold hover:bg-blue-500 hover:border-transparent hover:text-white px-2 py-1 rounded text-blue-700"
+          type="button" (click)="delete(car._id)">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="trash w-6 h-6 sm:block hidden">
+            <path fill-rule="evenodd"
+              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd"></path>
+          </svg>
+          Delete</button>
+
+        <button
+          class="flex ml-3 bg-transparent border border-blue-500 font-semibold hover:bg-blue-500 hover:border-transparent hover:text-white px-2 py-1 rounded text-blue-700"
+          type="button" (click)="onBooked(car)">
+          <ng-container *ngIf="car.isBooked; then unbooked; else booked">
+          </ng-container>
+        </button>
+      </div>
+    </div>
+
+    <p class="mt-4 text-sm">{{car.description}}</p>
+    <p class="font-medium mt-3 text-xl">{{car.price}}</p>
+
+    <div class="-mx-3 flex flex-wrap mt-2">
+      <div class="mx-2 mt-2 h-16 w-16 overflow-hidden" *ngFor="let img of car.images">
+        <img class="pretify-img" [src]="'data:image/png;base64,' + img">
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #booked>
+  <svg viewBox="0 0 20 20" fill="currentColor" class="lock-closed w-6 h-6 sm:block hidden">
+    <path fill-rule="evenodd"
+      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+      clip-rule="evenodd"></path>
+  </svg>
+  Booked
+</ng-template>
+
+<ng-template #unbooked>
+  <svg viewBox="0 0 20 20" fill="currentColor" class="lock-open w-6 h-6 sm:block hidden">
+    <path
+      d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z">
+    </path>
+  </svg>
+  Unbooked
+</ng-template>

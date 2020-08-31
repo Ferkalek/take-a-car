@@ -1,0 +1,20 @@
+.slider {
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.3s 0.2s;
+  cursor: pointer;
+
+  &.slider-selected {
+    order: 0;
+    opacity: 1;
+    transition: 1s;
+  }
+}
+
+.carousel-container {
+  height: 16rem;
+
+  @media (min-width: 768px) {
+    height: 28rem;
+  }
+}

@@ -1,0 +1,24 @@
+<div class="p-6 md:max-w-screen-lg max-w-screen-sm mx-auto">
+  <h1 class="ml-3 text-3xl font-sans font-medium uppercase text-center my-6">take a car</h1>
+
+  <div class="border-solid border-b border-gray-300 mb-6"></div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div *ngFor="let car of (cars$ | async)" class="car-card hover:shadow-lg transition ease-in-out duration-300">
+
+      <div class="overflow-hidden relative h-32 sm:h-48">
+        <img [src]="'data:image/png;base64,' + car.images[0]" class="absolute top-0 left-0 pretify-img">
+      </div>
+
+      <div class="flex flex-auto flex-col m-3">
+        <h2 class="text-header font-medium">{{car.title}}</h2>
+        <p class="text-sm flex-auto">{{car.description}}</p>
+        <h3 class="text-2xl text-right flex-none">{{car.price}}</h3>
+      </div>
+
+      <span class="basic-badge" [ngClass]="classesForStatus(car.isBooked)"
+        [textContent]="car.isBooked ? 'Booked' : 'Free'"></span>
+      <a [routerLink]="['/car', car._id]" class="absolute top-0 left-0 bottom-0 right-0"></a>
+    </div>
+  </div>
+</div>

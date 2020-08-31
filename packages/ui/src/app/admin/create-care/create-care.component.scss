@@ -1,0 +1,35 @@
+.row {
+    display: flex;
+}
+
+.preview-img {
+    overflow: hidden;
+    width: 120px;
+    position: relative;
+    margin-bottom: 12px;
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    .del-img {
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        cursor: pointer;
+        color: #c72222;
+        border: 1px solid #c72222;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+
+        &:hover {
+            color: #520b0b;
+            border: 1px solid #520b0b;
+        }
+    }
+}

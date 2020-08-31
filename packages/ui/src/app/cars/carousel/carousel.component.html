@@ -1,0 +1,15 @@
+<div class="carousel-container min-w-full relative overflow-hidden">
+  <div class="slider absolute top-0 left-0 right-0 bottom-0" *ngFor="let img of images; let select = index;"
+    [class.slider-selected]="select === selectedIndex">
+    <img class="pretify-img" [src]="'data:image/png;base64,' + img">
+  </div>
+</div>
+
+<div class="flex">
+  <div
+    class="h-16 w-16 border-2 border-solid btn-selected cursor-pointer hover:border-gray-500 transition ease-in-out duration-300"
+    [ngClass]="i === selectedIndex ? 'border-gray-500' : 'border-white'" *ngFor="let img of images; let i = index"
+    (click)="selected(i)">
+    <img class="pretify-img" [src]="'data:image/png;base64,' + img">
+  </div>
+</div>
