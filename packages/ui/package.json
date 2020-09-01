@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "build-tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.generated.css",
     "lint": "ng lint",
