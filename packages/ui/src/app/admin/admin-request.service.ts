@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ICarDTO } from "../shared/interfaces/car.interface";
+import { API_PATH } from "../shared/api.const";
 
 @Injectable({
   providedIn: "root",
@@ -10,34 +11,27 @@ import { ICarDTO } from "../shared/interfaces/car.interface";
 export class AdminRequestService {
   constructor(private http: HttpClient) {}
 
-  public getFileRequest(filePath: string): Observable<ICarDTO> {
-    return this.http
-      .get<ICarDTO>(`http://localhost:3000/file-worker/${filePath}`)
-      .pipe(catchError(this.handleError));
-  }
-
   public addCarRequest(car: FormData): Observable<ICarDTO> {
     return this.http
-      .post<ICarDTO>("http://localhost:3000/cars/create", car)
+      .post<ICarDTO>(API_PATH.CREATE, car)
       .pipe(catchError(this.handleError));
   }
 
   public deleteCarRequest(id: string): Observable<ICarDTO> {
     return this.http
-      .delete<ICarDTO>(`http://localhost:3000/cars/${id}`)
+      .delete<ICarDTO>(`${API_PATH.CARS}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   public updateCarStatusRequest(id: string, car: ICarDTO): Observable<ICarDTO> {
     return this.http
-      .put<ICarDTO>(`http://localhost:3000/cars/update-status/${id}`, car)
+      .put<ICarDTO>(`${API_PATH.UPDATE_STATUS}/${id}`, car)
       .pipe(catchError(this.handleError));
   }
 
   public updateCarRequest(id: string, car: FormData): Observable<ICarDTO> {
-    console.log("-- 2 updateCarRequest", car);
     return this.http
-      .put<ICarDTO>(`http://localhost:3000/cars/edit/${id}`, car)
+      .put<ICarDTO>(`${API_PATH.EDIT}/${id}`, car)
       .pipe(catchError(this.handleError));
   }
 

@@ -90,14 +90,6 @@ export class CarsState {
         return c;
       }
     });
-    // nCars
-    // state.cars.forEach(c => {
-    //     if (c.id === carId) {
-    //         nCars.push({...c, isBooked: status});
-    //     } else {
-    //         nCars.push(c);
-    //     }
-    // });
     setState({
       cars: [...nCars],
     });

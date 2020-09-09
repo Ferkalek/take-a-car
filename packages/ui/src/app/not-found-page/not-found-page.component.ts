@@ -1,16 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
-  selector: 'tcar-not-found-page',
-  templateUrl: './not-found-page.component.html',
-  styleUrls: ['./not-found-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "tcar-not-found-page",
+  templateUrl: "./not-found-page.component.html",
+  styleUrls: ["./not-found-page.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class NotFoundPageComponent {}

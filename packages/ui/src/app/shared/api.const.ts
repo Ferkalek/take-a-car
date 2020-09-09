@@ -1,8 +1,11 @@
 import { environment } from "../../environments/environment.prod";
 
-const BASIC_URL = environment.basicUrl;
+const BASE_URL = environment.baseUrl;
+const CARS = `${BASE_URL}/cars`;
 
 export const API_PATH = {
-  GET_FILE: BASIC_URL + "file-worker",
-  CARS: BASIC_URL + "/cars",
+  CARS: `${CARS}`,
+  CREATE: `${CARS}/create`,
+  UPDATE_STATUS: `${CARS}/update-status`,
+  EDIT: `${CARS}/edit`,
 };

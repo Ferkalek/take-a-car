@@ -9,21 +9,7 @@ import { ICarDTO } from "../shared/interfaces/car.interface";
 export class AdminService {
   public message$ = new BehaviorSubject<string>("");
 
-  private message: string = "";
-
   constructor(private adminRequestService: AdminRequestService) {}
-
-  public getMessage(): string {
-    return this.message;
-  }
-
-  public setMessage(status: string): void {
-    this.message = status;
-  }
-
-  public getFile(filePath: string): Observable<ICarDTO> {
-    return this.adminRequestService.getFileRequest(filePath);
-  }
 
   public addCars(car: FormData): Observable<ICarDTO> {
     return this.adminRequestService.addCarRequest(car);

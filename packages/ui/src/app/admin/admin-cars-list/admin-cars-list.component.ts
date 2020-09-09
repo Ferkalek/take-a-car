@@ -20,6 +20,7 @@ import { CarsListService } from "src/app/shared/services/cars-list.service";
 import { take } from "rxjs/operators";
 import { UtilsService } from "src/app/shared/services/utils.service";
 import { LoaderService } from "src/app/loader/loader.service";
+import { PROCESSING, MSG } from "../admin.constants";
 
 @Component({
   selector: "tcar-admin-cars-list",
@@ -47,7 +48,7 @@ export class AdminCarsListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loaderService.setPprocessing("Loading...");
+    this.loaderService.setPprocessing(PROCESSING.LOADING);
     this.utilsService.addClassNoscroll();
 
     this.subscriptions.push(
@@ -73,7 +74,7 @@ export class AdminCarsListComponent implements OnInit, OnDestroy {
 
   public onBooked(car: ICarDTO): void {
     const { _id, isBooked } = car;
-    this.loaderService.setPprocessing("Changing status...");
+    this.loaderService.setPprocessing(PROCESSING.CHANGING_STATUS);
     this.utilsService.addClassNoscroll();
 
     this.adminService
@@ -84,7 +85,7 @@ export class AdminCarsListComponent implements OnInit, OnDestroy {
         this.loaderService.setPprocessing("");
         this.utilsService.removeClassNoscroll();
 
-        this.showStatus("The state of the car was successfully changed!");
+        this.showStatus(MSG.CHANG_STATUS_SUCCESS);
       });
   }
 
@@ -93,7 +94,7 @@ export class AdminCarsListComponent implements OnInit, OnDestroy {
   }
 
   public delete(_id: string): void {
-    this.loaderService.setPprocessing("Deleting...");
+    this.loaderService.setPprocessing(PROCESSING.DELETING);
     this.utilsService.addClassNoscroll();
 
     this.adminService.deleteCars(_id).subscribe((res) => {
@@ -102,7 +103,7 @@ export class AdminCarsListComponent implements OnInit, OnDestroy {
       this.loaderService.setPprocessing("");
       this.utilsService.removeClassNoscroll();
 
-      this.showStatus("The car was successfully deleted!");
+      this.showStatus(MSG.DELETE_SUCCESS);
     });
   }
 

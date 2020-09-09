@@ -26,7 +26,6 @@ export class CarsService {
   }
 
   async update(id: string, car: ICarDTO): Promise<ICarDTO> {
-    console.log("-- 5.1 update");
     return await this.carModel.findByIdAndUpdate(id, car, { new: true });
   }
 }

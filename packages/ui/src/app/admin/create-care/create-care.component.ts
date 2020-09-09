@@ -18,12 +18,12 @@ import {
 } from "@angular/forms";
 import { AdminService } from "../admin.service";
 import { fileExtensionValidator } from "./file-extantion-validation";
-import { BehaviorSubject } from "rxjs";
 import { AddNewCarAction, UpdateCarAction } from "src/app/actions/car.action";
 import { ICarDTO } from "src/app/shared/interfaces/car.interface";
 import { Store } from "@ngxs/store";
 import { LoaderService } from "src/app/loader/loader.service";
 import { UtilsService } from "src/app/shared/services/utils.service";
+import { PROCESSING, MSG } from "../admin.constants";
 
 @Component({
   selector: "tcar-create-care",
@@ -33,24 +33,14 @@ import { UtilsService } from "src/app/shared/services/utils.service";
 })
 export class CreateCareComponent implements OnInit {
   @Input()
-  public inpCar: ICarDTO | null;
+  public inpCar: ICarDTO | null = null;
 
   @Output()
   public leaving = new EventEmitter();
 
   public acceptedExtensions = "jpg, jpeg, png, bmp";
 
-  readonly carForm: FormGroup = this.formBuilder.group({
-    title: ["", Validators.required],
-    description: ["", Validators.required],
-    price: ["", Validators.required],
-    images: this.formBuilder.array([
-      this.formBuilder.control("", [
-        Validators.required,
-        fileExtensionValidator(this.acceptedExtensions),
-      ]),
-    ]),
-  });
+  public carForm: FormGroup;
 
   @ViewChild("form", { static: false }) form: NgForm;
 
@@ -76,8 +66,25 @@ export class CreateCareComponent implements OnInit {
   ngOnInit(): void {
     if (this.inpCar !== null) {
       const { title, description, price, images } = this.inpCar;
-      this.carForm.patchValue({ title, description, price });
+      this.carForm = this.formBuilder.group({
+        title: [title, Validators.required],
+        description: [description, Validators.required],
+        price: [price, Validators.required],
+        images: [[]],
+      });
       this._existImgs = [...images];
+    } else {
+      this.carForm = this.formBuilder.group({
+        title: ["", Validators.required],
+        description: ["", Validators.required],
+        price: ["", Validators.required],
+        images: this.formBuilder.array([
+          this.formBuilder.control("", [
+            Validators.required,
+            fileExtensionValidator(this.acceptedExtensions),
+          ]),
+        ]),
+      });
     }
   }
 
@@ -97,7 +104,9 @@ export class CreateCareComponent implements OnInit {
             `image_${i}`
           ) as HTMLInputElement;
           const file = imgInput.files[0];
-          formData.append("files[]", file, file.name);
+          if (file) {
+            formData.append("files[]", file, file.name);
+          }
         }
       }
       formData.append(key, this.carForm.value[key]);
@@ -113,10 +122,10 @@ export class CreateCareComponent implements OnInit {
     this.leaving.emit();
     this.utilsService.addClassNoscroll();
     if (this.inpCar === null) {
-      this.loaderService.setPprocessing("Creating a new car...");
+      this.loaderService.setPprocessing(PROCESSING.CREATING);
       this.createRequest(formData);
     } else {
-      this.loaderService.setPprocessing("Editing a car...");
+      this.loaderService.setPprocessing(PROCESSING.EDITING);
       this.editRequest(this.inpCar._id, formData);
     }
   }
@@ -190,10 +199,8 @@ export class CreateCareComponent implements OnInit {
   }
 
   private showMessage(msg: string): void {
-    // this.adminService.setMessage(msg);
     this.adminService.message$.next(msg);
     setTimeout(() => {
-      // this.adminService.setMessage("");
       this.adminService.message$.next("");
     }, 1500);
   }
@@ -205,7 +212,7 @@ export class CreateCareComponent implements OnInit {
       this.loaderService.setPprocessing("");
       this.utilsService.removeClassNoscroll();
 
-      this.showMessage("The car was successfuly created!");
+      this.showMessage(MSG.CREATE_SUCCESS);
     });
   }
 
@@ -216,7 +223,7 @@ export class CreateCareComponent implements OnInit {
       this.loaderService.setPprocessing("");
       this.utilsService.removeClassNoscroll();
 
-      this.showMessage("The car was successfully updated!");
+      this.showMessage(MSG.UPDATE_SUCCESS);
     });
   }
 }

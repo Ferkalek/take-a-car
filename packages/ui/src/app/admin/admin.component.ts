@@ -1,11 +1,5 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  Inject,
-} from "@angular/core";
+import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
 import { ICarDTO } from "../shared/interfaces/car.interface";
-import { DOCUMENT } from "@angular/common";
 import { UtilsService } from "../shared/services/utils.service";
 import { AdminService } from "./admin.service";
 import { BehaviorSubject } from "rxjs";
@@ -27,10 +21,7 @@ export class AdminComponent implements OnInit {
   }
 
   get message(): string {
-    // const m = this.adminService.getMessage();
-    const m = this.adminService.message$.getValue();
-    console.log("----- message", m);
-    return m;
+    return this.adminService.message$.getValue();
   }
 
   constructor(

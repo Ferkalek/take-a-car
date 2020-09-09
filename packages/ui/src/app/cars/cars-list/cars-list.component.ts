@@ -12,6 +12,10 @@ import { ICarDTO } from "src/app/shared/interfaces/car.interface";
 import { AddCarsAction } from "src/app/actions/car.action";
 import { LoaderService } from "src/app/loader/loader.service";
 import { UtilsService } from "src/app/shared/services/utils.service";
+import {
+  BOOKED_STYLED_CLASSES,
+  UNBOOKED_STYLED_CLASSES,
+} from "./cars-list.consts";
 
 @Component({
   selector: "tcar-cars-list",
@@ -55,10 +59,6 @@ export class CarsListComponent implements OnInit, OnDestroy {
   }
 
   public classesForStatus(isBooked: boolean): string {
-    if (isBooked) {
-      return "bg-gray-500 border-gray-600";
-    } else {
-      return "bg-teal-200 border-teal-300 text-teal-700";
-    }
+    return isBooked ? BOOKED_STYLED_CLASSES : UNBOOKED_STYLED_CLASSES;
   }
 }

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "test:dev": "ng test --code-coverage",
     "test": "ng test",
     "build-tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.generated.css",
     "lint": "ng lint",
@@ -22,6 +23,7 @@
     "@angular/router": "~8.2.8",
     "@ngxs/logger-plugin": "^3.6.2-dev.master-eaa5d86",
     "@ngxs/store": "^3.6.2-dev.master-eaa5d86",
+    "@types/mocha": "^8.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
