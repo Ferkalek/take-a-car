@@ -1,9 +1,15 @@
 import * as path from "path";
 import * as fs from "fs";
+import { MulterOptions } from "@nestjs/platform-express/multer/interfaces/multer-options.interface";
 
-export const pathToSrc = path.dirname(process.mainModule.filename);
+export const pathToSrc = path.resolve("./src");
+// export const pathToSrc = path.dirname(process.mainModule.filename);
 
-export const imageFileFilter = (req, file, callback) => {
+export const imageFileFilter: MulterOptions["fileFilter"] = (
+  req,
+  file,
+  callback
+) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
     return callback(new Error("Only image files are allowed!"), false);
   }

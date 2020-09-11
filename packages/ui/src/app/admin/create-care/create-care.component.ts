@@ -70,7 +70,7 @@ export class CreateCareComponent implements OnInit {
         title: [title, Validators.required],
         description: [description, Validators.required],
         price: [price, Validators.required],
-        images: [[]],
+        images: this.formBuilder.array([this.formBuilder.control("")]),
       });
       this._existImgs = [...images];
     } else {

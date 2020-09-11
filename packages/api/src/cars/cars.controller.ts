@@ -12,10 +12,7 @@ import {
 import { CarsService } from "./cars.service";
 import { ICarDTO } from "./car.interface";
 import { FilesInterceptor } from "@nestjs/platform-express";
-import {
-  imageFileFilter,
-  getImgAsString,
-} from "src/utils/file-uploading.utils";
+import { imageFileFilter, getImgAsString } from "../utils/file-uploading.utils";
 
 @Controller("cars")
 export class CarsController {
