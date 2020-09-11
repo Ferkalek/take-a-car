@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment.prod";
+import { environment } from "../../environments/environment";
 
 const BASE_URL = environment.baseUrl;
 const CARS = `${BASE_URL}/cars`;
