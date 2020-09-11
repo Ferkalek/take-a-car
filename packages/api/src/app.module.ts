@@ -12,7 +12,9 @@ import config from "@env/config";
     MongooseModule.forRoot(config.mongoURL),
     CarsModule,
     ServeStaticModule.forRoot({
-      rootPath: path.join("./public"),
+      rootPath: path.resolve("./public"),
+      renderPath: "*",
+      exclude: ["/cars*"],
     }),
   ],
 })
