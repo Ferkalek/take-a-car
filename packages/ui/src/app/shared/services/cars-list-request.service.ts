@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { API_PATH } from "../api.const";
+import { ICarDTO, IRentCarDTO } from "../interfaces/car.interface";
 
 @Injectable({
   providedIn: "root",
@@ -9,16 +11,25 @@ import { API_PATH } from "../api.const";
 export class CarsListRequestService {
   constructor(private http: HttpClient) {}
 
-  getCarsRequest(): Observable<any> {
-    return this.http.get<any>(API_PATH.CARS);
+  public getCarsRequest(): Observable<ICarDTO[]> {
+    return this.http
+      .get<ICarDTO[]>(API_PATH.CARS)
+      .pipe(catchError(this.handleError));
   }
 
-  getOneCarRequest(id: string): Observable<any> {
-    return this.http.get<any>(`${API_PATH.CARS}/${id}`);
+  public getOneCarRequest(id: string): Observable<ICarDTO> {
+    return this.http
+      .get<ICarDTO>(`${API_PATH.CARS}/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
-  sendEmailRequest(id: string): Observable<any> {
-    console.log("-- 3 -- sendEmail", id);
-    return this.http.get<any>(`${API_PATH.SEND_EMAIL}/${id}`);
+  public sendEmailRequest(rentCar: IRentCarDTO): Observable<any> {
+    return this.http
+      .post<IRentCarDTO>(`${API_PATH.SEND_EMAIL}`, rentCar)
+      .pipe(catchError(this.handleError));
   }
+
+  private handleError = (error: any) => {
+    return throwError(error);
+  };
 }

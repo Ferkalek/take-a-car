@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { IRentCarDTO } from "../interfaces/car.interface";
 import { CarsListRequestService } from "./cars-list-request.service";
 
 @Injectable({
@@ -16,8 +17,7 @@ export class CarsListService {
     return this.carsListRequestService.getOneCarRequest(id);
   }
 
-  sendEmail(id: string): Observable<any> {
-    console.log("-- 2 -- sendEmail", id);
-    return this.carsListRequestService.sendEmailRequest(id);
+  sendEmail(rentCar: IRentCarDTO): Observable<any> {
+    return this.carsListRequestService.sendEmailRequest(rentCar);
   }
 }

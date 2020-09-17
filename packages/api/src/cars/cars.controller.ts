@@ -102,11 +102,4 @@ export class CarsController {
   delete(@Param() param): Promise<ICarDTO> {
     return this.carsService.delete(param.id);
   }
-
-  @Get("sendemail/:id")
-  sendEmail(@Param("id") id: string): Promise<any> {
-    console.log("-- 4 -- sendEmail", id);
-    // return Promise.resolve();
-    return this.carsService.sendMailFunc(id);
-  }
 }

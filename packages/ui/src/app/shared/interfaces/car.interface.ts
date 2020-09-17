@@ -6,3 +6,13 @@ export interface ICarDTO {
   price: string;
   images: string[];
 }
+
+export interface IDataFromCar {
+  title: string;
+  id: string;
+}
+
+export interface IRentCarDTO extends IDataFromCar {
+  userName: string;
+  userContact: string;
+}

@@ -3,13 +3,26 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   OnDestroy,
+  ViewChild,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { CarsListService } from "src/app/shared/services/cars-list.service";
-import { ICarDTO } from "src/app/shared/interfaces/car.interface";
+import {
+  ICarDTO,
+  IDataFromCar,
+  IRentCarDTO,
+} from "src/app/shared/interfaces/car.interface";
 import { LoaderService } from "src/app/loader/loader.service";
 import { UtilsService } from "src/app/shared/services/utils.service";
+import {
+  FormBuilder,
+  FormControl,
+  FormControlName,
+  FormGroup,
+  NgForm,
+  Validators,
+} from "@angular/forms";
 
 @Component({
   selector: "tcar-car-page",
@@ -20,6 +33,12 @@ import { UtilsService } from "src/app/shared/services/utils.service";
 export class CarPageComponent implements OnInit, OnDestroy {
   public isLoading = new BehaviorSubject(true);
   public car$ = new BehaviorSubject<ICarDTO>(null);
+  public feedbackForm: FormGroup = this.formBuilder.group({
+    userName: ["", Validators.required],
+    userContact: ["", Validators.required],
+  });
+
+  @ViewChild("form", { static: false }) form: NgForm;
   private subscriptions: Subscription[] = [];
   private carId = "";
 
@@ -27,7 +46,8 @@ export class CarPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private carsListService: CarsListService,
     private loaderService: LoaderService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +65,25 @@ export class CarPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  sendEmail() {
-    console.log("-- 1 -- sendEmail");
+  public onSubmit(data: IDataFromCar) {
+    if (this.feedbackForm.invalid) {
+      return;
+    }
+
+    const { userName, userContact } = this.feedbackForm.value;
+    const rentCar = {
+      ...data,
+      userName,
+      userContact,
+    };
+
     this.carsListService
-      .sendEmail(this.carId)
+      .sendEmail(rentCar)
       .subscribe((d) => console.log("-- 1 -- sendEmail END", d));
+  }
+
+  public getField(field: string) {
+    return this.feedbackForm.get(field);
   }
 
   ngOnDestroy(): void {
