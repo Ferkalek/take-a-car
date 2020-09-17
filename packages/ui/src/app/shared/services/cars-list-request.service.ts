@@ -16,4 +16,9 @@ export class CarsListRequestService {
   getOneCarRequest(id: string): Observable<any> {
     return this.http.get<any>(`${API_PATH.CARS}/${id}`);
   }
+
+  sendEmailRequest(id: string): Observable<any> {
+    console.log("-- 3 -- sendEmail", id);
+    return this.http.get<any>(`${API_PATH.SEND_EMAIL}/${id}`);
+  }
 }

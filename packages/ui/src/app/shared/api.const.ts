@@ -8,4 +8,5 @@ export const API_PATH = {
   CREATE: `${CARS}/create`,
   UPDATE_STATUS: `${CARS}/update-status`,
   EDIT: `${CARS}/edit`,
+  SEND_EMAIL: `${CARS}/sendemail`,
 };

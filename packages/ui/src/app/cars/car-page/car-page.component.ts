@@ -21,6 +21,7 @@ export class CarPageComponent implements OnInit, OnDestroy {
   public isLoading = new BehaviorSubject(true);
   public car$ = new BehaviorSubject<ICarDTO>(null);
   private subscriptions: Subscription[] = [];
+  private carId = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -33,15 +34,22 @@ export class CarPageComponent implements OnInit, OnDestroy {
     this.loaderService.setPprocessing("Loading...");
     this.utilsService.addClassNoscroll();
 
-    const carId = this.route.snapshot.params.id;
+    this.carId = this.route.snapshot.params.id;
 
     this.subscriptions.push(
-      this.carsListService.getOneCar(carId).subscribe((car) => {
+      this.carsListService.getOneCar(this.carId).subscribe((car) => {
         this.car$.next(car);
         this.loaderService.setPprocessing("");
         this.utilsService.removeClassNoscroll();
       })
     );
+  }
+
+  sendEmail() {
+    console.log("-- 1 -- sendEmail");
+    this.carsListService
+      .sendEmail(this.carId)
+      .subscribe((d) => console.log("-- 1 -- sendEmail END", d));
   }
 
   ngOnDestroy(): void {

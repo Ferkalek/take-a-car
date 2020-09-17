@@ -24,7 +24,7 @@ export class CarsController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id): Promise<ICarDTO> {
+  findOne(@Param("id") id: string): Promise<ICarDTO> {
     return this.carsService.findOne(id);
   }
 
@@ -101,5 +101,12 @@ export class CarsController {
   @Delete(":id")
   delete(@Param() param): Promise<ICarDTO> {
     return this.carsService.delete(param.id);
+  }
+
+  @Get("sendemail/:id")
+  sendEmail(@Param("id") id: string): Promise<any> {
+    console.log("-- 4 -- sendEmail", id);
+    // return Promise.resolve();
+    return this.carsService.sendMailFunc(id);
   }
 }
