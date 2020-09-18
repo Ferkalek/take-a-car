@@ -11,8 +11,8 @@ export class SendMailService {
     const { id, title, userName, userContact } = rentCar;
 
     return this.nodemailerService.sendMail({
-      from: '"Want to rent a car" <anton.ferkalek@yandex.ru>',
-      to: "ferkalekanton@gmail.com",
+      from: `"Want to rent a car" <${process.env.MAIL_USER}>`,
+      to: process.env.MAIL_USER_TO,
       subject: "Want to rent a car.",
       // text: `I whant to rent a car ${rentCar.title}`,
       html: `

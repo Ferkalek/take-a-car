@@ -3,6 +3,9 @@ import { NodemailerModule } from "@iaminfinity/nodemailer/dist/nodemailer.module
 import { FeedbackController } from "./feedback.controller";
 import { SendMailService } from "./send-mail.service";
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 @Module({
   imports: [
     NodemailerModule.register({
@@ -10,8 +13,8 @@ import { SendMailService } from "./send-mail.service";
       port: 587,
       secure: false,
       auth: {
-        user: "anton.ferkalek@yandex.ru",
-        pass: "kapito4ka",
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
       },
     }),
   ],
