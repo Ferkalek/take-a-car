@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarPageComponent } from "./car-page.component";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -13,7 +13,12 @@ describe("CarPageComponent", () => {
     TestBed.configureTestingModule({
       declarations: [CarPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ],
     }).compileComponents();
   }));
 

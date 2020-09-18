@@ -2,7 +2,6 @@
   opacity: 0;
   will-change: opacity;
   transition: opacity 0.3s 0.2s;
-  cursor: pointer;
 
   &.slider-selected {
     order: 0;

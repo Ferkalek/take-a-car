@@ -23,6 +23,7 @@ import {
   NgForm,
   Validators,
 } from "@angular/forms";
+import { AdminService } from "src/app/admin/admin.service";
 
 @Component({
   selector: "tcar-car-page",
@@ -37,7 +38,7 @@ export class CarPageComponent implements OnInit, OnDestroy {
     userName: ["", Validators.required],
     userContact: ["", Validators.required],
   });
-
+  public isFeedbackForm = false;
   @ViewChild("form", { static: false }) form: NgForm;
   private subscriptions: Subscription[] = [];
   private carId = "";
@@ -47,7 +48,8 @@ export class CarPageComponent implements OnInit, OnDestroy {
     private carsListService: CarsListService,
     private loaderService: LoaderService,
     private utilsService: UtilsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private adminService: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -77,13 +79,29 @@ export class CarPageComponent implements OnInit, OnDestroy {
       userContact,
     };
 
-    this.carsListService
-      .sendEmail(rentCar)
-      .subscribe((d) => console.log("-- 1 -- sendEmail END", d));
+    this.carsListService.sendEmail(rentCar).subscribe((d) => {
+      this.feedbackForm.reset();
+      this.toggleFeedbackForm();
+      this.adminService.message$.next(
+        "Your request sent. We contact you ASAP!"
+      );
+      setTimeout(() => {
+        this.adminService.message$.next("");
+      }, 2000);
+    });
   }
 
   public getField(field: string) {
     return this.feedbackForm.get(field);
+  }
+
+  toggleFeedbackForm() {
+    if (this.isFeedbackForm) {
+      this.utilsService.removeClassNoscroll();
+    } else {
+      this.utilsService.addClassNoscroll();
+    }
+    this.isFeedbackForm = !this.isFeedbackForm;
   }
 
   ngOnDestroy(): void {

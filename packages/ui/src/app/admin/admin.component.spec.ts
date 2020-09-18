@@ -53,11 +53,4 @@ describe("AdminComponent", () => {
       expect(spy).toHaveBeenCalled();
     });
   });
-
-  describe("closeAlert", () => {
-    it("Test 1: should the message equal empty when the method run", () => {
-      component.closeAlert();
-      expect(component.message).toEqual("");
-    });
-  });
 });

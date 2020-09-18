@@ -1,5 +1,8 @@
+<tcar-alert></tcar-alert>
 <ng-container *ngIf="(car$ | async) as car">
   <div class="p-6 md:max-w-screen-lg max-w-screen-sm mx-auto">
+    <p class="mb-8"><a class="hover:text-gray-900 text-gray-600 text-xs uppercase" routerLink="/">Go to list of cars</a>
+    </p>
     <h1 class="ml-3 text-3xl font-sans font-medium uppercase text-center mb-6">{{car.title}}</h1>
 
     <div class="border-solid border-b border-gray-300 mb-6"></div>
@@ -7,52 +10,75 @@
     <tcar-carousel [images]="car.images"></tcar-carousel>
 
     <div class="pt-8 pb-4">
-      <p class="font-bold text-header uppercase">About car:</p>
-      <p class="text-primary pl-10">{{car.description}}</p>
+      <div class="flex items-end">
+        <div class="pr-4 flex-1">
+          <p class="font-bold text-header uppercase">About car:</p>
+          <p class="text-primary pl-10">{{car.description}}</p>
 
-      <p class="font-bold text-header uppercase mt-6">Price:</p>
-      <p class="text-primary pl-10 text-2xl font-bold">{{car.price}}</p>
+          <p class="font-bold text-header uppercase mt-6">Price:</p>
+          <p class="text-primary pl-10 text-2xl font-bold">{{car.price}}</p>
+        </div>
+
+        <button
+          class="bg-orange-500 border border-orange-500 font-semibold hover:bg-orange-600 md:px-8 md:py-4 px-4 py-2 rounded shadow text-center text-gray-100"
+          (click)="toggleFeedbackForm()">I want to rent<br>this car!</button>
+      </div>
+
     </div>
   </div>
 
-  <div class='bg-gray-300 pt-4'>
-    <div class="w-full max-w-xs mx-auto">
-      <p class="text-gray-500 pb-4">If you interested in this car please send us your name and how we can contact
-        you. And we immediately contact you.</p>
-      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" [formGroup]="feedbackForm"
-        (ngSubmit)="onSubmit({title: car.title, id: car._id})">
-        <div class="mb-6 relative">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-            Name
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name" type="text" placeholder="Name" formControlName="userName" required>
-          <p class="-mb-5 absolute left-0 bottom-0 italic text-red-500 text-xs"
-            *ngIf="getField('userName').touched && getField('userName').hasError('required')">
-            This field is required!</p>
-        </div>
-        <div class="mb-6 relative">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="contact">
-            Email / tel:
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="contact" type="text" placeholder="Email / tel:" formControlName="userContact" required>
-          <p class="-mb-5 absolute left-0 bottom-0 italic text-red-500 text-xs"
-            *ngIf="getField('userContact').touched && getField('userContact').hasError('required')">
-            This field is required!</p>
-        </div>
-        <div class="flex items-center justify-between">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            [class.cursor-not-allowed]="!getField('userName').touched && !getField('userName').touched" type="submit"
-            [disabled]="!getField('userName').touched && !getField('userName').touched">
-            Send!
+  <div *ngIf="isFeedbackForm"
+    class='bg-black bg-opacity-75 bottom-0 fixed flex items-center justify-center left-0 right-0 top-0 z-20'>
+    <div class="max-w-xs p-4 w-full">
+      <div class="bg-white px-6 py-4 rounded shadow-md">
+        <div class="flex justify-end">
+          <button class="-mr-2 -mt-2 duration-300 ease-in-out hover:text-gray-500 text-gray-700 transition"
+            type="button" (click)="toggleFeedbackForm()">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="x h-10 w-10">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
           </button>
         </div>
-      </form>
 
+
+        <p class="text-gray-500 pb-4 text-sm">If you interested in this car please send us your name and how we can
+          contact
+          you. And we immediately contact you.</p>
+        <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit({title: car.title, id: car._id})">
+          <div class="mb-6 relative">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+              Name
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name" type="text" placeholder="Name" formControlName="userName" required>
+            <p class="-mb-5 absolute left-0 bottom-0 italic text-red-500 text-xs"
+              *ngIf="getField('userName').touched && getField('userName').hasError('required')">
+              This field is required!</p>
+          </div>
+          <div class="mb-6 relative">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="contact">
+              Email / tel:
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="contact" type="text" placeholder="Email / tel:" formControlName="userContact" required>
+            <p class="-mb-5 absolute left-0 bottom-0 italic text-red-500 text-xs"
+              *ngIf="getField('userContact').touched && getField('userContact').hasError('required')">
+              This field is required!</p>
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              [class.cursor-not-allowed]="!getField('userName').touched && !getField('userName').touched" type="submit"
+              [disabled]="!getField('userName').touched && !getField('userName').touched">
+              Send!
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </ng-container>

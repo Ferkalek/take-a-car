@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
-// import { NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -14,7 +13,12 @@ import { environment } from "src/environments/environment";
 import { LoaderComponent } from "./loader/loader.component";
 
 @NgModule({
-  declarations: [AppComponent, NotFoundPageComponent, LoaderComponent],
+  declarations: [
+    AppComponent,
+    NotFoundPageComponent,
+    LoaderComponent,
+    LoaderComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +27,6 @@ import { LoaderComponent } from "./loader/loader.component";
     NgxsModule.forRoot([CarsState], {
       developmentMode: !environment.production,
     }),
-    // NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
   ],
   providers: [],
