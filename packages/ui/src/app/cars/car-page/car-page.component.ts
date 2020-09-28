@@ -72,6 +72,8 @@ export class CarPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.loaderService.setPprocessing("Sending request...");
+
     const { userName, userContact } = this.feedbackForm.value;
     const rentCar = {
       ...data,
@@ -80,6 +82,7 @@ export class CarPageComponent implements OnInit, OnDestroy {
     };
 
     this.carsListService.sendEmail(rentCar).subscribe((d) => {
+      this.loaderService.setPprocessing("");
       this.feedbackForm.reset();
       this.toggleFeedbackForm();
       this.adminService.message$.next(
